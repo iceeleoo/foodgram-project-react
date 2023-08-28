@@ -196,7 +196,7 @@ class RecipeWriteSerializer(ModelSerializer):
         tags_list = []
         for tag in tags:
             if tag in tags_list:
-                raise ValidationError({'tags': 'Теги должны быть уникальными!'})
+                raise ValidationError({'tags': 'Тег должен быть уникальным!'})
             tags_list.append(tag)
         return value
 
@@ -227,7 +227,9 @@ class RecipeWriteSerializer(ModelSerializer):
         instance.tags.clear()
         instance.tags.set(tags)
         instance.ingredients.clear()
-        self.create_ingredients_amounts(recipe=instance, ingredients=ingredients)
+        self.create_ingredients_amounts(
+            recipe=instance, ingredients=ingredients
+        )
         instance.save()
         return instance
 
