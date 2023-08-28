@@ -117,6 +117,8 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
+.DS_Store
+
 # mkdocs documentation
 /site
 
@@ -130,3 +132,5 @@ dmypy.json
 
 # .idea
 .idea
+/infra/foodgramproject.crt
+/infra/foodgramproject.key
