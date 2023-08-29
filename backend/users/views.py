@@ -1,1 +1,0 @@
-# перенес в backend/api/views.py:
