@@ -1,3 +1,7 @@
+from datetime import datetime
+
+from django.db.models import Sum
+
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
@@ -172,6 +176,29 @@ class ShoppingCart(models.Model):
                 name='unique_shopping_cart'
             )
         ]
+
+    def generate_shopping_list(self):
+        ingredients = IngredientInRecipe.objects.filter(
+            recipe__shopping_cart=self
+        ).values(
+            'ingredient__name',
+            'ingredient__measurement_unit'
+        ).annotate(amount=Sum('amount'))
+
+        today = datetime.today()
+        shopping_list = (
+            f'Список покупок для: {self.user.get_full_name()}\n\n'
+            f'Дата: {today:%Y-%m-%d}\n\n'
+        )
+        shopping_list += '\n'.join([
+            f'- {ingredient["ingredient__name"]} '
+            f'({ingredient["ingredient__measurement_unit"]})'
+            f' - {ingredient["amount"]}'
+            for ingredient in ingredients
+        ])
+        shopping_list += f'\n\nFoodgram ({today:%Y})'
+
+        return shopping_list
 
     def __str__(self):
         return f'{self.user} добавил "{self.recipe}" в Корзину покупок'

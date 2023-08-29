@@ -175,7 +175,7 @@ class RecipeWriteSerializer(ModelSerializer):
             raise ValidationError({
                 'ingredients': 'Нужен хотя бы один ингредиент!'
             })
-        ingredients_list = []
+        ingredients_list = set()
         for item in ingredients:
             ingredient = get_object_or_404(Ingredient, id=item['id'])
             if ingredient in ingredients_list:
@@ -186,7 +186,7 @@ class RecipeWriteSerializer(ModelSerializer):
                 raise ValidationError({
                     'amount': 'Количество ингредиента должно быть больше 0!'
                 })
-            ingredients_list.append(ingredient)
+            ingredients_list.add(ingredient)
         return value
 
     def validate_tags(self, value):
