@@ -11,7 +11,6 @@ User = get_user_model()
 
 
 class Ingredient(models.Model):
-    """ Модель Ингридиент """
 
     name = models.CharField('Название', max_length=200)
     measurement_unit = models.CharField('Единица измерения', max_length=200)
@@ -26,7 +25,6 @@ class Ingredient(models.Model):
 
 
 class Tag(models.Model):
-    """ Модель Тэг """
 
     name = models.CharField('Название', unique=True, max_length=200)
     color = models.CharField(
@@ -51,7 +49,6 @@ class Tag(models.Model):
 
 
 class Recipe(models.Model):
-    """ Модель Рецепт """
 
     name = models.CharField('Название', max_length=200)
     author = models.ForeignKey(
@@ -92,7 +89,6 @@ class Recipe(models.Model):
 
 
 class IngredientInRecipe(models.Model):
-    """ Модель для связи Ингридиента и Рецепта """
 
     recipe = models.ForeignKey(
         Recipe,
@@ -122,7 +118,6 @@ class IngredientInRecipe(models.Model):
 
 
 class Favourite(models.Model):
-    """ Модель Избранное """
 
     user = models.ForeignKey(
         User,
@@ -152,7 +147,6 @@ class Favourite(models.Model):
 
 
 class ShoppingCart(models.Model):
-    """ Модель Корзина покупок """
 
     user = models.ForeignKey(
         User,
